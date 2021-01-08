@@ -1,6 +1,6 @@
 # url-book-cipher
 ### Disclaimer: This is a toy, don't use to encrypt anything you actually care about. Just use it to make puzzles or memes 
-A simple book cipher that uses a given website to encrypt text files
+A simple book cipher that uses a given website to encrypt text files. It also supports local files just use a file path instead of a URL for the `URL` command line argument. If the value of `URL` is not a file that exists on your system it will be assumed to be a URL.
 
 ## How It works
 
