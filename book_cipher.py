@@ -3,9 +3,20 @@ import sys
 import random
 import json
 import getopt
+import os.path
+
+#TODO support newlines, do something about omitted chars due to not being present in content source
 
 def getRandomIndex(charIndex, ch):
 	return charIndex[ch][random.randint(0, len( charIndex[ch])-1 ) ]
+
+def encode_from_url(url, plaintext):
+	content = requests.get(url).content.decode()
+	return encode(content, plaintext)
+
+def encode(content, plaintext):
+	index = indexSiteChars(content)
+	return genCipherText(plaintext, index)
 
 def genCipherText(msg, charIndex):
 	ciphertext = []
@@ -33,8 +44,11 @@ def indexSiteChars(content):
 		charIndex = 0
 	return index
 
-def decode(url, ciphertext):
+def decode_from_url(url, ciphertext):
 	content = requests.get(url).content.decode()
+	return decode(content, ciphertext)
+
+def decode(content, ciphertext):
 	lines = content.split("\n")
 	plaintext = ""
 	for coord in ciphertext:
@@ -63,18 +77,28 @@ for opt, arg in opts:
 
 
 
-URL = sys.argv[1]
+BOOK = sys.argv[1]
+
+#read input plain or ciphertext
 f = open(infile, 'r')
 fcontent = f.read()
 f.close()
 
-if DECODE:
-	print(decode(URL, json.loads(fcontent)))
+#determine if its a url or a file
+if os.path.isfile(BOOK):
+	bf = open(BOOK, 'r')
+	content = bf.read()
+	bf.close()
+	if DECODE:
+		print(decode(content, json.loads(fcontent)))
+	else:
+		print(encode(content, fcontent))
 else:
-	r = requests.get(URL)
-	index = indexSiteChars(r.content.decode())
-	ciphertext = genCipherText(fcontent, index)
-	print(ciphertext)
+	URL = BOOK	#just for clarity
+	if DECODE:
+		print(decode_from_url(URL, json.loads(fcontent)))
+	else:
+		print(encode_from_url(URL, fcontent))
 
 sys.exit(0)
 
