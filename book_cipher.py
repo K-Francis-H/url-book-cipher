@@ -25,7 +25,6 @@ def genCipherText(msg, charIndex):
 			ciphertext.append(getRandomIndex(charIndex, ch))
 	return ciphertext
 
-
 def indexSiteChars(content): 
 	index = {}
 	lineIndex = 0
@@ -73,10 +72,6 @@ for opt, arg in opts:
 		infile = arg
 		break
 	
-
-
-
-
 BOOK = sys.argv[1]
 
 #read input plain or ciphertext
@@ -101,5 +96,3 @@ else:
 		print(encode_from_url(URL, fcontent))
 
 sys.exit(0)
-
-
