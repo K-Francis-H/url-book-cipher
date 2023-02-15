@@ -24,6 +24,6 @@ Note that the output will vary even with identical input. The website contents a
 #### Decode
 If we saved the above output into a file named `book_cipher.json` we can decode it like so:
 
-`python3 book_cipher.py http://example/com/ -d book_cipher.json`
+`python3 book_cipher.py http://example.com/ -d book_cipher.json`
 ##### Output
 `hello world!`
